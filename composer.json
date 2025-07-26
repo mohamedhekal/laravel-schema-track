@@ -53,7 +53,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "phpunit --no-coverage",
         "test-coverage": "phpunit --coverage-html build/coverage",
         "analyse": "phpstan analyse --memory-limit=2G",
         "format": "pint",

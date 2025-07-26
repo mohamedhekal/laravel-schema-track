@@ -10,7 +10,7 @@ install: ## Install dependencies
 	composer install
 
 test: ## Run tests
-	vendor/bin/phpunit
+	vendor/bin/phpunit --no-coverage
 
 test-coverage: ## Run tests with coverage
 	vendor/bin/phpunit --coverage-html build/coverage
