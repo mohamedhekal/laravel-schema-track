@@ -1,0 +1,14 @@
+/vendor
+composer.phar
+composer.lock
+.phpunit.result.cache
+/build
+/coverage
+.env
+.env.backup
+.phpunit.cache
+*.log
+.DS_Store
+Thumbs.db
+storage/schema-track/
+storage/schema-track-test/ 

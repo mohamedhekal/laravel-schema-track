@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/TestCase.php
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false 
