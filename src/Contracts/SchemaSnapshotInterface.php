@@ -7,7 +7,7 @@ interface SchemaSnapshotInterface
     /**
      * Take a snapshot of the current database schema
      */
-    public function takeSnapshot(string $name = null): array;
+    public function takeSnapshot(?string $name = null): array;
 
     /**
      * Get a specific snapshot by name

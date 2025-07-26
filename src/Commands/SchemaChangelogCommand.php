@@ -64,8 +64,9 @@ class SchemaChangelogCommand extends Command
                 $fromSnapshot = $this->resolveSnapshotName($from);
                 $toSnapshot = $this->resolveSnapshotName($to);
 
-                if (!$fromSnapshot || !$toSnapshot) {
+                if (! $fromSnapshot || ! $toSnapshot) {
                     $this->error('Could not resolve snapshot names. Use --from and --to options.');
+
                     return 1;
                 }
 
@@ -77,6 +78,7 @@ class SchemaChangelogCommand extends Command
                     $this->info("✅ Changelog saved to: {$output}");
                 } else {
                     $this->error("❌ Failed to save changelog to: {$output}");
+
                     return 1;
                 }
             } else {
@@ -85,7 +87,8 @@ class SchemaChangelogCommand extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error("❌ Failed to generate changelog: " . $e->getMessage());
+            $this->error('❌ Failed to generate changelog: '.$e->getMessage());
+
             return 1;
         }
     }
@@ -94,6 +97,7 @@ class SchemaChangelogCommand extends Command
     {
         if ($name === 'latest') {
             $latest = $this->snapshotService->getLatestSnapshot();
+
             return $latest ? $latest['name'] : null;
         }
 

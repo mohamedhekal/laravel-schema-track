@@ -44,11 +44,12 @@ class SchemaListCommand extends Command
 
             if (empty($snapshots)) {
                 $this->info('No snapshots found.');
+
                 return 0;
             }
 
-            if ($limit) {
-                $snapshots = array_slice($snapshots, -$limit);
+            if ($limit && is_numeric($limit)) {
+                $snapshots = array_slice($snapshots, -(int) $limit);
             }
 
             if ($format === 'json') {
@@ -59,7 +60,8 @@ class SchemaListCommand extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error("❌ Failed to list snapshots: " . $e->getMessage());
+            $this->error('❌ Failed to list snapshots: '.$e->getMessage());
+
             return 1;
         }
     }

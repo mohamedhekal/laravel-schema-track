@@ -52,16 +52,18 @@ class SchemaDiffCommand extends Command
         $fromSnapshot = $this->resolveSnapshotName($from);
         $toSnapshot = $this->resolveSnapshotName($to);
 
-        if (!$fromSnapshot || !$toSnapshot) {
+        if (! $fromSnapshot || ! $toSnapshot) {
             $this->error('Could not resolve snapshot names. Use --from and --to options.');
+
             return 1;
         }
 
         try {
             $diff = $this->diffService->compare($fromSnapshot, $toSnapshot);
 
-            if ($breakingOnly && !$this->diffService->hasBreakingChanges($diff)) {
+            if ($breakingOnly && ! $this->diffService->hasBreakingChanges($diff)) {
                 $this->info('✅ No breaking changes detected.');
+
                 return 0;
             }
 
@@ -79,7 +81,8 @@ class SchemaDiffCommand extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error("❌ Failed to compare snapshots: " . $e->getMessage());
+            $this->error('❌ Failed to compare snapshots: '.$e->getMessage());
+
             return 1;
         }
     }
@@ -88,6 +91,7 @@ class SchemaDiffCommand extends Command
     {
         if ($name === 'latest') {
             $latest = $this->snapshotService->getLatestSnapshot();
+
             return $latest ? $latest['name'] : null;
         }
 

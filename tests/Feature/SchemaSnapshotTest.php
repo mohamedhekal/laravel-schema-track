@@ -2,10 +2,10 @@
 
 namespace MohamedHekal\LaravelSchemaTrack\Tests\Feature;
 
-use MohamedHekal\LaravelSchemaTrack\Tests\TestCase;
-use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
+use MohamedHekal\LaravelSchemaTrack\Tests\TestCase;
 
 class SchemaSnapshotTest extends TestCase
 {

@@ -3,17 +3,17 @@
 namespace MohamedHekal\LaravelSchemaTrack;
 
 use Illuminate\Support\ServiceProvider;
-use MohamedHekal\LaravelSchemaTrack\Commands\SchemaTrackCommand;
-use MohamedHekal\LaravelSchemaTrack\Commands\SchemaDiffCommand;
-use MohamedHekal\LaravelSchemaTrack\Commands\SchemaCompareCommand;
 use MohamedHekal\LaravelSchemaTrack\Commands\SchemaChangelogCommand;
+use MohamedHekal\LaravelSchemaTrack\Commands\SchemaCompareCommand;
+use MohamedHekal\LaravelSchemaTrack\Commands\SchemaDiffCommand;
 use MohamedHekal\LaravelSchemaTrack\Commands\SchemaListCommand;
-use MohamedHekal\LaravelSchemaTrack\Services\SchemaSnapshotService;
-use MohamedHekal\LaravelSchemaTrack\Services\SchemaDiffService;
-use MohamedHekal\LaravelSchemaTrack\Services\SchemaChangelogService;
-use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
-use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaDiffInterface;
+use MohamedHekal\LaravelSchemaTrack\Commands\SchemaTrackCommand;
 use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaChangelogInterface;
+use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaDiffInterface;
+use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
+use MohamedHekal\LaravelSchemaTrack\Services\SchemaChangelogService;
+use MohamedHekal\LaravelSchemaTrack\Services\SchemaDiffService;
+use MohamedHekal\LaravelSchemaTrack\Services\SchemaSnapshotService;
 
 class SchemaTrackServiceProvider extends ServiceProvider
 {
@@ -22,7 +22,7 @@ class SchemaTrackServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/schema-track.php', 'schema-track');
+        $this->mergeConfigFrom(__DIR__.'/../config/schema-track.php', 'schema-track');
 
         $this->app->singleton(SchemaSnapshotInterface::class, SchemaSnapshotService::class);
         $this->app->singleton(SchemaDiffInterface::class, SchemaDiffService::class);
@@ -36,7 +36,7 @@ class SchemaTrackServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/schema-track.php' => config_path('schema-track.php'),
+                __DIR__.'/../config/schema-track.php' => config_path('schema-track.php'),
             ], 'schema-track-config');
 
             $this->commands([
@@ -61,7 +61,7 @@ class SchemaTrackServiceProvider extends ServiceProvider
     {
         $this->app['events']->listen('Illuminate\Database\Events\MigrationsEnded', function ($event) {
             $snapshotService = $this->app->make(SchemaSnapshotInterface::class);
-            $snapshotService->takeSnapshot('auto_migration_' . date('Y_m_d_His'));
+            $snapshotService->takeSnapshot('auto_migration_'.date('Y_m_d_His'));
         });
     }
 }

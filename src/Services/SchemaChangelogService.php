@@ -42,7 +42,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
         }
 
         $output = "# Complete Schema Changelog\n\n";
-        $output .= "Generated on: " . date('Y-m-d H:i:s') . "\n\n";
+        $output .= 'Generated on: '.date('Y-m-d H:i:s')."\n\n";
 
         for ($i = 1; $i < count($snapshots); $i++) {
             $from = $snapshots[$i - 1];
@@ -60,6 +60,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
     {
         try {
             file_put_contents($filename, $content);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -106,7 +107,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
 
         $output = "## Schema Changes ({$fromDate} → {$toDate})\n\n";
 
-        if (!empty($diff['new_tables'])) {
+        if (! empty($diff['new_tables'])) {
             $output .= "### 🆕 New Tables\n\n";
             foreach ($diff['new_tables'] as $table) {
                 $output .= "- **`{$table}`**\n";
@@ -114,7 +115,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['removed_tables'])) {
+        if (! empty($diff['removed_tables'])) {
             $output .= "### 🗑️ Removed Tables\n\n";
             foreach ($diff['removed_tables'] as $table) {
                 $output .= "- **`{$table}`**\n";
@@ -122,12 +123,12 @@ class SchemaChangelogService implements SchemaChangelogInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['modified_tables'])) {
+        if (! empty($diff['modified_tables'])) {
             $output .= "### 📝 Modified Tables\n\n";
             foreach ($diff['modified_tables'] as $table => $changes) {
                 $output .= "#### `{$table}`\n\n";
 
-                if (!empty($changes['new_columns'])) {
+                if (! empty($changes['new_columns'])) {
                     $output .= "**Added Columns:**\n";
                     foreach ($changes['new_columns'] as $column) {
                         $output .= "- `{$column}`\n";
@@ -135,7 +136,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
                     $output .= "\n";
                 }
 
-                if (!empty($changes['removed_columns'])) {
+                if (! empty($changes['removed_columns'])) {
                     $output .= "**Removed Columns:**\n";
                     foreach ($changes['removed_columns'] as $column) {
                         $output .= "- `{$column}`\n";
@@ -143,7 +144,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
                     $output .= "\n";
                 }
 
-                if (!empty($changes['modified_columns'])) {
+                if (! empty($changes['modified_columns'])) {
                     $output .= "**Modified Columns:**\n";
                     foreach ($changes['modified_columns'] as $column => $modifications) {
                         $output .= "- `{$column}`:\n";
@@ -164,7 +165,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
         $output .= "- **New Tables**: {$summary['new_tables']}\n";
         $output .= "- **Removed Tables**: {$summary['removed_tables']}\n";
         $output .= "- **Modified Tables**: {$summary['modified_tables']}\n";
-        $output .= "- **Breaking Changes**: " . ($summary['breaking_changes'] ? 'Yes' : 'No') . "\n\n";
+        $output .= '- **Breaking Changes**: '.($summary['breaking_changes'] ? 'Yes' : 'No')."\n\n";
 
         return $output;
     }
@@ -178,9 +179,9 @@ class SchemaChangelogService implements SchemaChangelogInterface
         $toDate = $to ? date('Y-m-d H:i:s', strtotime($to['timestamp'])) : 'Unknown';
 
         $output = "Schema Changes ({$fromDate} → {$toDate})\n";
-        $output .= str_repeat('=', strlen($output)) . "\n\n";
+        $output .= str_repeat('=', strlen($output))."\n\n";
 
-        if (!empty($diff['new_tables'])) {
+        if (! empty($diff['new_tables'])) {
             $output .= "New Tables:\n";
             foreach ($diff['new_tables'] as $table) {
                 $output .= "  + {$table}\n";
@@ -188,7 +189,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['removed_tables'])) {
+        if (! empty($diff['removed_tables'])) {
             $output .= "Removed Tables:\n";
             foreach ($diff['removed_tables'] as $table) {
                 $output .= "  - {$table}\n";
@@ -196,24 +197,24 @@ class SchemaChangelogService implements SchemaChangelogInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['modified_tables'])) {
+        if (! empty($diff['modified_tables'])) {
             $output .= "Modified Tables:\n";
             foreach ($diff['modified_tables'] as $table => $changes) {
                 $output .= "  {$table}:\n";
 
-                if (!empty($changes['new_columns'])) {
+                if (! empty($changes['new_columns'])) {
                     foreach ($changes['new_columns'] as $column) {
                         $output .= "    + Added: {$column}\n";
                     }
                 }
 
-                if (!empty($changes['removed_columns'])) {
+                if (! empty($changes['removed_columns'])) {
                     foreach ($changes['removed_columns'] as $column) {
                         $output .= "    - Removed: {$column}\n";
                     }
                 }
 
-                if (!empty($changes['modified_columns'])) {
+                if (! empty($changes['modified_columns'])) {
                     foreach ($changes['modified_columns'] as $column => $modifications) {
                         foreach ($modifications as $modification => $change) {
                             $modificationName = str_replace('_changed', '', $modification);

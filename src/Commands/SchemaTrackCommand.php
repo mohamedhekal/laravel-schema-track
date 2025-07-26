@@ -39,8 +39,9 @@ class SchemaTrackCommand extends Command
         $name = $this->argument('name');
         $force = $this->option('force');
 
-        if ($name && $this->snapshotService->snapshotExists($name) && !$force) {
+        if ($name && $this->snapshotService->snapshotExists($name) && ! $force) {
             $this->error("Snapshot '{$name}' already exists. Use --force to overwrite.");
+
             return 1;
         }
 
@@ -49,15 +50,16 @@ class SchemaTrackCommand extends Command
         try {
             $snapshot = $this->snapshotService->takeSnapshot($name);
 
-            $this->info("✅ Snapshot created successfully!");
+            $this->info('✅ Snapshot created successfully!');
             $this->line("📁 Name: {$snapshot['name']}");
             $this->line("🕐 Timestamp: {$snapshot['timestamp']}");
             $this->line("🗄️ Database: {$snapshot['database']}");
-            $this->line("📊 Tables: " . count($snapshot['schema']));
+            $this->line('📊 Tables: '.count($snapshot['schema']));
 
             return 0;
         } catch (\Exception $e) {
-            $this->error("❌ Failed to create snapshot: " . $e->getMessage());
+            $this->error('❌ Failed to create snapshot: '.$e->getMessage());
+
             return 1;
         }
     }

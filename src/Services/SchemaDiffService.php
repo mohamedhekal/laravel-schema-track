@@ -19,7 +19,7 @@ class SchemaDiffService implements SchemaDiffInterface
         $from = $this->snapshotService->getSnapshot($fromSnapshot);
         $to = $this->snapshotService->getSnapshot($toSnapshot);
 
-        if (!$from || !$to) {
+        if (! $from || ! $to) {
             throw new \InvalidArgumentException('One or both snapshots not found');
         }
 
@@ -52,12 +52,12 @@ class SchemaDiffService implements SchemaDiffInterface
     public function hasBreakingChanges(array $diff): bool
     {
         // Check for breaking changes
-        if (!empty($diff['removed_tables'])) {
+        if (! empty($diff['removed_tables'])) {
             return true;
         }
 
         foreach ($diff['modified_tables'] as $table => $changes) {
-            if (!empty($changes['removed_columns'])) {
+            if (! empty($changes['removed_columns'])) {
                 return true;
             }
 
@@ -110,7 +110,7 @@ class SchemaDiffService implements SchemaDiffInterface
 
         foreach ($commonTables as $table) {
             $tableDiff = $this->compareTable($fromSchema[$table], $toSchema[$table]);
-            if (!empty($tableDiff)) {
+            if (! empty($tableDiff)) {
                 $diff['modified_tables'][$table] = $tableDiff;
             }
         }
@@ -142,7 +142,7 @@ class SchemaDiffService implements SchemaDiffInterface
                 $fromTable['columns'][$column],
                 $toTable['columns'][$column]
             );
-            if (!empty($columnDiff)) {
+            if (! empty($columnDiff)) {
                 $diff['modified_columns'][$column] = $columnDiff;
             }
         }
@@ -158,7 +158,7 @@ class SchemaDiffService implements SchemaDiffInterface
 
         foreach ($fields as $field) {
             if (($fromColumn[$field] ?? null) !== ($toColumn[$field] ?? null)) {
-                $diff[$field . '_changed'] = [
+                $diff[$field.'_changed'] = [
                     'from' => $fromColumn[$field] ?? null,
                     'to' => $toColumn[$field] ?? null,
                 ];
@@ -173,7 +173,7 @@ class SchemaDiffService implements SchemaDiffInterface
         $output = "📊 Schema Diff Report\n";
         $output .= "====================\n\n";
 
-        if (!empty($diff['new_tables'])) {
+        if (! empty($diff['new_tables'])) {
             $output .= "🆕 New Tables:\n";
             foreach ($diff['new_tables'] as $table) {
                 $output .= "  - {$table}\n";
@@ -181,7 +181,7 @@ class SchemaDiffService implements SchemaDiffInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['removed_tables'])) {
+        if (! empty($diff['removed_tables'])) {
             $output .= "🗑️ Removed Tables:\n";
             foreach ($diff['removed_tables'] as $table) {
                 $output .= "  - {$table}\n";
@@ -189,24 +189,24 @@ class SchemaDiffService implements SchemaDiffInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['modified_tables'])) {
+        if (! empty($diff['modified_tables'])) {
             $output .= "📝 Modified Tables:\n";
             foreach ($diff['modified_tables'] as $table => $changes) {
                 $output .= "  - {$table}:\n";
 
-                if (!empty($changes['new_columns'])) {
+                if (! empty($changes['new_columns'])) {
                     foreach ($changes['new_columns'] as $column) {
                         $output .= "    + Added: {$column}\n";
                     }
                 }
 
-                if (!empty($changes['removed_columns'])) {
+                if (! empty($changes['removed_columns'])) {
                     foreach ($changes['removed_columns'] as $column) {
                         $output .= "    - Removed: {$column}\n";
                     }
                 }
 
-                if (!empty($changes['modified_columns'])) {
+                if (! empty($changes['modified_columns'])) {
                     foreach ($changes['modified_columns'] as $column => $modifications) {
                         foreach ($modifications as $modification => $change) {
                             $output .= "    ~ Changed: {$column} ({$modification})\n";
@@ -223,7 +223,7 @@ class SchemaDiffService implements SchemaDiffInterface
     {
         $output = "# Schema Changes\n\n";
 
-        if (!empty($diff['new_tables'])) {
+        if (! empty($diff['new_tables'])) {
             $output .= "## New Tables\n\n";
             foreach ($diff['new_tables'] as $table) {
                 $output .= "- `{$table}`\n";
@@ -231,7 +231,7 @@ class SchemaDiffService implements SchemaDiffInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['removed_tables'])) {
+        if (! empty($diff['removed_tables'])) {
             $output .= "## Removed Tables\n\n";
             foreach ($diff['removed_tables'] as $table) {
                 $output .= "- `{$table}`\n";
@@ -239,12 +239,12 @@ class SchemaDiffService implements SchemaDiffInterface
             $output .= "\n";
         }
 
-        if (!empty($diff['modified_tables'])) {
+        if (! empty($diff['modified_tables'])) {
             $output .= "## Modified Tables\n\n";
             foreach ($diff['modified_tables'] as $table => $changes) {
                 $output .= "### `{$table}`\n\n";
 
-                if (!empty($changes['new_columns'])) {
+                if (! empty($changes['new_columns'])) {
                     $output .= "**Added Columns:**\n";
                     foreach ($changes['new_columns'] as $column) {
                         $output .= "- `{$column}`\n";
@@ -252,7 +252,7 @@ class SchemaDiffService implements SchemaDiffInterface
                     $output .= "\n";
                 }
 
-                if (!empty($changes['removed_columns'])) {
+                if (! empty($changes['removed_columns'])) {
                     $output .= "**Removed Columns:**\n";
                     foreach ($changes['removed_columns'] as $column) {
                         $output .= "- `{$column}`\n";
@@ -260,7 +260,7 @@ class SchemaDiffService implements SchemaDiffInterface
                     $output .= "\n";
                 }
 
-                if (!empty($changes['modified_columns'])) {
+                if (! empty($changes['modified_columns'])) {
                     $output .= "**Modified Columns:**\n";
                     foreach ($changes['modified_columns'] as $column => $modifications) {
                         $output .= "- `{$column}`:\n";

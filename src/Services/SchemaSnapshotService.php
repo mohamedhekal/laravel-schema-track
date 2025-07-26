@@ -2,13 +2,9 @@
 
 namespace MohamedHekal\LaravelSchemaTrack\Services;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Schema\Column;
-use Doctrine\DBAL\Schema\Index;
+use Illuminate\Support\Facades\DB;
+use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
 
 class SchemaSnapshotService implements SchemaSnapshotInterface
 {
@@ -18,15 +14,15 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
     {
         $this->storagePath = config('schema-track.storage_path', storage_path('schema-track'));
 
-        if (!file_exists($this->storagePath)) {
+        if (! file_exists($this->storagePath)) {
             mkdir($this->storagePath, 0755, true);
         }
     }
 
-    public function takeSnapshot(string $name = null): array
+    public function takeSnapshot(?string $name = null): array
     {
-        $name = $name ?: 'snapshot_' . date('Y_m_d_His');
-        $filename = $name . '.json';
+        $name = $name ?: 'snapshot_'.date('Y_m_d_His');
+        $filename = $name.'.json';
 
         $schema = $this->extractSchema();
         $snapshot = [
@@ -43,10 +39,10 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
 
     public function getSnapshot(string $name): ?array
     {
-        $filename = $name . '.json';
-        $path = $this->storagePath . '/' . $filename;
+        $filename = $name.'.json';
+        $path = $this->storagePath.'/'.$filename;
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             return null;
         }
 
@@ -56,7 +52,7 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
     public function getAllSnapshots(): array
     {
         $snapshots = [];
-        $files = glob($this->storagePath . '/*.json');
+        $files = glob($this->storagePath.'/*.json');
 
         foreach ($files as $file) {
             $content = json_decode(file_get_contents($file), true);
@@ -76,13 +72,14 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
     public function getLatestSnapshot(): ?array
     {
         $snapshots = $this->getAllSnapshots();
+
         return end($snapshots) ?: null;
     }
 
     public function deleteSnapshot(string $name): bool
     {
-        $filename = $name . '.json';
-        $path = $this->storagePath . '/' . $filename;
+        $filename = $name.'.json';
+        $path = $this->storagePath.'/'.$filename;
 
         if (file_exists($path)) {
             return unlink($path);
@@ -93,8 +90,8 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
 
     public function snapshotExists(string $name): bool
     {
-        $filename = $name . '.json';
-        $path = $this->storagePath . '/' . $filename;
+        $filename = $name.'.json';
+        $path = $this->storagePath.'/'.$filename;
 
         return file_exists($path);
     }
@@ -135,7 +132,7 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
                 'length' => $column->getLength(),
                 'precision' => $column->getPrecision(),
                 'scale' => $column->getScale(),
-                'nullable' => !$column->getNotnull(),
+                'nullable' => ! $column->getNotnull(),
                 'default' => $column->getDefault(),
                 'auto_increment' => $column->getAutoincrement(),
                 'unsigned' => $column->getUnsigned(),
@@ -180,7 +177,7 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
 
     protected function saveSnapshot(string $filename, array $snapshot): void
     {
-        $path = $this->storagePath . '/' . $filename;
+        $path = $this->storagePath.'/'.$filename;
         file_put_contents($path, json_encode($snapshot, JSON_PRETTY_PRINT));
     }
 }

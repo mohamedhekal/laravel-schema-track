@@ -2,11 +2,11 @@
 
 namespace MohamedHekal\LaravelSchemaTrack\Tests\Feature;
 
-use MohamedHekal\LaravelSchemaTrack\Tests\TestCase;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaDiffInterface;
 use MohamedHekal\LaravelSchemaTrack\Contracts\SchemaSnapshotInterface;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use MohamedHekal\LaravelSchemaTrack\Tests\TestCase;
 
 class SchemaDiffTest extends TestCase
 {

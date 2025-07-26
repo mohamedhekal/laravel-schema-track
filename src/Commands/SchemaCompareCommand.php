@@ -41,8 +41,9 @@ class SchemaCompareCommand extends Command
         $format = $this->option('format');
         $breakingOnly = $this->option('breaking-only');
 
-        if (!$environment) {
+        if (! $environment) {
             $this->error('Please specify an environment with --env option.');
+
             return 1;
         }
 
@@ -51,8 +52,9 @@ class SchemaCompareCommand extends Command
         try {
             $diff = $this->diffService->compareWithEnvironment($environment);
 
-            if ($breakingOnly && !$this->diffService->hasBreakingChanges($diff)) {
+            if ($breakingOnly && ! $this->diffService->hasBreakingChanges($diff)) {
                 $this->info('✅ No breaking changes detected.');
+
                 return 0;
             }
 
@@ -70,7 +72,8 @@ class SchemaCompareCommand extends Command
 
             return 0;
         } catch (\Exception $e) {
-            $this->error("❌ Failed to compare with environment: " . $e->getMessage());
+            $this->error('❌ Failed to compare with environment: '.$e->getMessage());
+
             return 1;
         }
     }
