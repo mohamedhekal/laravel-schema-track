@@ -16,7 +16,7 @@ test-coverage: ## Run tests with coverage
 	vendor/bin/phpunit --coverage-html build/coverage
 
 analyse: ## Run static analysis
-	vendor/bin/phpstan analyse
+	vendor/bin/phpstan analyse --memory-limit=2G
 
 format: ## Format code with Laravel Pint
 	vendor/bin/pint

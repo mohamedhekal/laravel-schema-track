@@ -20,7 +20,7 @@ return [
     | writable directory within your Laravel application.
     |
     */
-    'storage_path' => storage_path('schema-track'),
+    'storage_path' => 'storage/schema-track',
 
     /*
     |--------------------------------------------------------------------------

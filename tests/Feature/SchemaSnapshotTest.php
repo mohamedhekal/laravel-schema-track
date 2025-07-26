@@ -25,14 +25,17 @@ class SchemaSnapshotTest extends TestCase
         // Clean up test storage
         $storagePath = config('schema-track.storage_path');
         if (is_dir($storagePath)) {
-            array_map('unlink', glob("$storagePath/*.json"));
+            $files = glob("$storagePath/*.json");
+            if ($files !== false) {
+                array_map('unlink', $files);
+            }
             rmdir($storagePath);
         }
 
         parent::tearDown();
     }
 
-    public function test_can_take_snapshot()
+    public function test_can_take_snapshot(): void
     {
         $snapshot = $this->snapshotService->takeSnapshot('test_snapshot');
 
@@ -43,7 +46,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertArrayHasKey('schema', $snapshot);
     }
 
-    public function test_can_get_snapshot()
+    public function test_can_get_snapshot(): void
     {
         $this->snapshotService->takeSnapshot('test_snapshot');
 
@@ -53,7 +56,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertEquals('test_snapshot', $snapshot['name']);
     }
 
-    public function test_can_get_all_snapshots()
+    public function test_can_get_all_snapshots(): void
     {
         $this->snapshotService->takeSnapshot('snapshot_1');
         $this->snapshotService->takeSnapshot('snapshot_2');
@@ -65,7 +68,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertEquals('snapshot_2', $snapshots[1]['name']);
     }
 
-    public function test_can_get_latest_snapshot()
+    public function test_can_get_latest_snapshot(): void
     {
         $this->snapshotService->takeSnapshot('snapshot_1');
         $this->snapshotService->takeSnapshot('snapshot_2');
@@ -76,7 +79,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertEquals('snapshot_2', $latest['name']);
     }
 
-    public function test_can_delete_snapshot()
+    public function test_can_delete_snapshot(): void
     {
         $this->snapshotService->takeSnapshot('test_snapshot');
 
@@ -88,7 +91,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertFalse($this->snapshotService->snapshotExists('test_snapshot'));
     }
 
-    public function test_snapshot_contains_table_information()
+    public function test_snapshot_contains_table_information(): void
     {
         $snapshot = $this->snapshotService->takeSnapshot('test_snapshot');
 
@@ -101,7 +104,7 @@ class SchemaSnapshotTest extends TestCase
         $this->assertArrayHasKey('foreign_keys', $usersTable);
     }
 
-    public function test_snapshot_excludes_system_tables()
+    public function test_snapshot_excludes_system_tables(): void
     {
         $snapshot = $this->snapshotService->takeSnapshot('test_snapshot');
 
@@ -112,7 +115,7 @@ class SchemaSnapshotTest extends TestCase
         }
     }
 
-    protected function createTestTables()
+    protected function createTestTables(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();

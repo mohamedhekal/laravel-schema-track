@@ -61,7 +61,7 @@ class SchemaTrackServiceProvider extends ServiceProvider
     {
         $this->app['events']->listen('Illuminate\Database\Events\MigrationsEnded', function ($event) {
             $snapshotService = $this->app->make(SchemaSnapshotInterface::class);
-            $snapshotService->takeSnapshot('auto_migration_' . now()->format('Y_m_d_His'));
+            $snapshotService->takeSnapshot('auto_migration_' . date('Y_m_d_His'));
         });
     }
 }

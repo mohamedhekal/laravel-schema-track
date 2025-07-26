@@ -42,7 +42,7 @@ class SchemaChangelogService implements SchemaChangelogInterface
         }
 
         $output = "# Complete Schema Changelog\n\n";
-        $output .= "Generated on: " . now()->format('Y-m-d H:i:s') . "\n\n";
+        $output .= "Generated on: " . date('Y-m-d H:i:s') . "\n\n";
 
         for ($i = 1; $i < count($snapshots); $i++) {
             $from = $snapshots[$i - 1];

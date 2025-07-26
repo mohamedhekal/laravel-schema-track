@@ -25,13 +25,13 @@ class SchemaSnapshotService implements SchemaSnapshotInterface
 
     public function takeSnapshot(string $name = null): array
     {
-        $name = $name ?: 'snapshot_' . now()->format('Y_m_d_His');
+        $name = $name ?: 'snapshot_' . date('Y_m_d_His');
         $filename = $name . '.json';
 
         $schema = $this->extractSchema();
         $snapshot = [
             'name' => $name,
-            'timestamp' => now()->toISOString(),
+            'timestamp' => date('c'),
             'database' => config('database.default'),
             'schema' => $schema,
         ];

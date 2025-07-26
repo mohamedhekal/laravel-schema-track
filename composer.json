@@ -21,6 +21,7 @@
         "mockery/mockery": "^1.0",
         "laravel/pint": "^1.0",
         "phpstan/phpstan": "^1.0",
+        "phpstan/extension-installer": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.0"
     },
     "autoload": {
@@ -38,6 +39,11 @@
             "providers": [
                 "MohamedHekal\\LaravelSchemaTrack\\SchemaTrackServiceProvider"
             ]
+        },
+        "phpstan": {
+            "includes": [
+                "vendor/orchestra/testbench-core/laravel/App/Console/Kernel.php"
+            ]
         }
     },
     "config": {
@@ -46,7 +52,7 @@
     "scripts": {
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-html build/coverage",
-        "analyse": "phpstan analyse",
+        "analyse": "phpstan analyse --memory-limit=2G",
         "format": "pint",
         "format-check": "pint --test",
         "cs-fix": "php-cs-fixer fix",

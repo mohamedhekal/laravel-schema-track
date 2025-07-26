@@ -25,14 +25,17 @@ class SchemaDiffTest extends TestCase
         // Clean up test storage
         $storagePath = config('schema-track.storage_path');
         if (is_dir($storagePath)) {
-            array_map('unlink', glob("$storagePath/*.json"));
+            $files = glob("$storagePath/*.json");
+            if ($files !== false) {
+                array_map('unlink', $files);
+            }
             rmdir($storagePath);
         }
 
         parent::tearDown();
     }
 
-    public function test_can_compare_snapshots()
+    public function test_can_compare_snapshots(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -50,7 +53,7 @@ class SchemaDiffTest extends TestCase
         $this->assertArrayHasKey('modified_tables', $diff);
     }
 
-    public function test_detects_new_tables()
+    public function test_detects_new_tables(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -69,7 +72,7 @@ class SchemaDiffTest extends TestCase
         $this->assertContains('comments', $diff['new_tables']);
     }
 
-    public function test_detects_removed_tables()
+    public function test_detects_removed_tables(): void
     {
         // Create initial schema with extra table
         $this->createInitialSchema();
@@ -89,7 +92,7 @@ class SchemaDiffTest extends TestCase
         $this->assertContains('comments', $diff['removed_tables']);
     }
 
-    public function test_detects_column_changes()
+    public function test_detects_column_changes(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -107,7 +110,7 @@ class SchemaDiffTest extends TestCase
         $this->assertArrayHasKey('modified_columns', $diff['modified_tables']['users']);
     }
 
-    public function test_can_format_diff_as_markdown()
+    public function test_can_format_diff_as_markdown(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -128,7 +131,7 @@ class SchemaDiffTest extends TestCase
         $this->assertStringContainsString('comments', $markdown);
     }
 
-    public function test_can_detect_breaking_changes()
+    public function test_can_detect_breaking_changes(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -144,7 +147,7 @@ class SchemaDiffTest extends TestCase
         $this->assertTrue($hasBreakingChanges);
     }
 
-    public function test_can_get_change_summary()
+    public function test_can_get_change_summary(): void
     {
         // Create initial schema
         $this->createInitialSchema();
@@ -170,7 +173,7 @@ class SchemaDiffTest extends TestCase
         $this->assertTrue($summary['breaking_changes']);
     }
 
-    protected function createInitialSchema()
+    protected function createInitialSchema(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -188,7 +191,7 @@ class SchemaDiffTest extends TestCase
         });
     }
 
-    protected function modifySchema()
+    protected function modifySchema(): void
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();

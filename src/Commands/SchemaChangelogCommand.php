@@ -46,11 +46,11 @@ class SchemaChangelogCommand extends Command
      */
     public function handle(): int
     {
-        $format = $this->option('format');
-        $output = $this->option('output');
-        $full = $this->option('full');
-        $dateFrom = $this->option('date-from');
-        $dateTo = $this->option('date-to');
+        $format = (string) $this->option('format');
+        $output = (string) $this->option('output');
+        $full = (bool) $this->option('full');
+        $dateFrom = (string) $this->option('date-from');
+        $dateTo = (string) $this->option('date-to');
 
         try {
             if ($full) {
@@ -58,8 +58,8 @@ class SchemaChangelogCommand extends Command
             } elseif ($dateFrom && $dateTo) {
                 $content = $this->changelogService->generateForDateRange($dateFrom, $dateTo, $format);
             } else {
-                $from = $this->option('from') ?: 'latest';
-                $to = $this->option('to') ?: 'latest';
+                $from = (string) ($this->option('from') ?: 'latest');
+                $to = (string) ($this->option('to') ?: 'latest');
 
                 $fromSnapshot = $this->resolveSnapshotName($from);
                 $toSnapshot = $this->resolveSnapshotName($to);
