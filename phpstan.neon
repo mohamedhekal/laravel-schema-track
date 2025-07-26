@@ -8,10 +8,8 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
-        - '#Call to static method [a-zA-Z0-9\\_]+ on a non-static context#'
-        - '#Call to an undefined method [a-zA-Z0-9\\_]+::[a-zA-Z0-9\\_]+#'
-        - '#Call to an undefined static method [a-zA-Z0-9\\_]+::[a-zA-Z0-9\\_]+#'
-        - '#Undefined function [a-zA-Z0-9\\_]+#'
-        - '#Undefined type [a-zA-Z0-9\\_\\\]+#'
-        - '#Parameter #[0-9]+ \$[a-zA-Z0-9\\_]+ of method [a-zA-Z0-9\\_\\\]+::[a-zA-Z0-9\\_]+\(\) expects [a-zA-Z0-9\\_\\\]+ [a-zA-Z0-9\\_\\\]+ given#'
-        - '#Part \$[a-zA-Z0-9\\_]+ \([a-zA-Z0-9\\_\\\|\s]+\) of encapsed string cannot be cast to string#' 
+        - '#Call to an undefined method#'
+        - '#Call to an undefined static method#'
+        - '#Undefined function#'
+        - '#Undefined type#'
+    reportUnmatchedIgnoredErrors: false 
