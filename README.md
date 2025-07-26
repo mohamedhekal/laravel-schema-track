@@ -307,6 +307,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## 📞 Support
 
-- 📧 Email: mohamedhekal@example.com
+- 📧 Email: mohamedhekal201414@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/mohamedhekal/laravel-schema-track/issues)
 - 📖 Documentation: [Wiki](https://github.com/mohamedhekal/laravel-schema-track/wiki) 
